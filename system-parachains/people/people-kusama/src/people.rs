@@ -84,6 +84,17 @@ pub enum IdentityField {
 	Twitter,
 	GitHub,
 	Discord,
+	Telegram,
+	Bluesky,
+	ForumPolkadot,
+	Signal,
+	LinkedIn,
+	Facebook,
+	Instagram,
+	WhatsApp,
+	Slack,
+	IRC,
+	Ed25519SSH,
 }
 
 /// Information concerning the identity of the controller of an account.
@@ -145,6 +156,49 @@ pub struct IdentityInfo {
 
 	/// The Discord username of the controller of the account.
 	pub discord: Data,
+
+	/// The Telegram username of the controller of the account
+	/// (e.g. part inside <>, https://t.me/<username>).
+	pub telegram: Data,
+
+	/// The Bluesky/AT Protocol handle of the controller of the account
+	/// (e.g., @alice.tld).
+	pub bluesky: Data,
+
+	/// The Polkadot Forum username of the controller of the account
+	/// (e.g. part inside <>, forum.polkadot.network/u/<username>).
+	pub forum_polkadot: Data,
+
+	/// The Signal phone number of the controller of the account
+	/// (e.g., alice12).
+	pub signal: Data,
+
+	/// The LinkedIn profile of the controller of the account
+	/// (e.g. inside <>, https://linkedin.com/in/<username>).
+	pub linkedin: Data,
+
+	/// The Instagram username of the controller of the account
+	/// (e.g. inside <>, https://instagram.com/<username>).
+	pub instagram: Data,
+
+	/// The Facebook profile of the controller of the account
+	/// (e.g. inside <>, https://facebook.com/<username>).
+	pub facebook: Data,
+
+	/// The WhatsApp phone number of the controller of the account
+	/// (e.g. inside <>, +1234567890).
+	pub whatsapp: Data,
+
+	/// The Slack username of the controller of the account, including the workspace domain
+	/// (e.g., @username:workspace.slack.com).
+	pub slack: Data,
+
+	/// The IRC nickname of the controller of the account, including the server
+	/// (e.g., nickname@irc.freenode.net).
+	pub irc: Data,
+
+	/// The Ed25519 SSH public key of the controller of the account.
+	pub ed25519_ssh: Option<[u8; 64]>,
 }
 
 impl IdentityInformationProvider for IdentityInfo {
@@ -168,7 +222,18 @@ impl IdentityInformationProvider for IdentityInfo {
 			image: data.clone(),
 			twitter: data.clone(),
 			github: data.clone(),
-			discord: data,
+			discord: data.clone(),
+			telegram: data.clone(),
+			bluesky: data.clone(),
+			forum_polkadot: data.clone(),
+			signal: data.clone(),
+			linkedin: data.clone(),
+			instagram: data.clone(),
+			facebook: data.clone(),
+			whatsapp: data.clone(),
+			slack: data.clone(),
+			irc: data,
+			ed25519_ssh: Some([0; 64]),
 		}
 	}
 
@@ -212,6 +277,39 @@ impl IdentityInfo {
 		if !self.discord.is_none() {
 			res.insert(IdentityField::Discord);
 		}
+		if !self.telegram.is_none() {
+			res.insert(IdentityField::Telegram);
+		}
+		if !self.bluesky.is_none() {
+			res.insert(IdentityField::Bluesky);
+		}
+		if !self.forum_polkadot.is_none() {
+			res.insert(IdentityField::ForumPolkadot);
+		}
+		if !self.signal.is_none() {
+			res.insert(IdentityField::Signal);
+		}
+		if !self.linkedin.is_none() {
+			res.insert(IdentityField::LinkedIn);
+		}
+		if !self.instagram.is_none() {
+			res.insert(IdentityField::Instagram);
+		}
+		if !self.facebook.is_none() {
+			res.insert(IdentityField::Facebook);
+		}
+		if !self.whatsapp.is_none() {
+			res.insert(IdentityField::WhatsApp);
+		}
+		if !self.slack.is_none() {
+			res.insert(IdentityField::Slack);
+		}
+		if !self.irc.is_none() {
+			res.insert(IdentityField::IRC);
+		}
+		if !self.ed25519_ssh.is_none() {
+			res.insert(IdentityField::Ed25519SSH);
+		}
 		res
 	}
 }
@@ -230,6 +328,17 @@ impl Default for IdentityInfo {
 			twitter: Data::None,
 			github: Data::None,
 			discord: Data::None,
+			telegram: Data::None,
+			bluesky: Data::None,
+			forum_polkadot: Data::None,
+			signal: Data::None,
+			linkedin: Data::None,
+			instagram: Data::None,
+			facebook: Data::None,
+			whatsapp: Data::None,
+			slack: Data::None,
+			irc: Data::None,
+			ed25519_ssh: None,
 		}
 	}
 }
